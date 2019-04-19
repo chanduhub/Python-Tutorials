@@ -7,6 +7,9 @@ from sqlalchemy.inspection import inspect
 from math import sqrt
 from math import sin, cos, sqrt, atan2, radians
 
+# API in FLask to serve user requests
+
+#Configuration of SQLAlchemy database and the table
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'pharma_test.db')
@@ -14,7 +17,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 
-
+# Creating model to store the values obtained from the database and the field distance is added to obtain requirements of the use case.
 class Pharmacies(db.Model):
 	__tablename__ = 'Pharmacies'
 	name = db.Column(db.String)
@@ -73,9 +76,7 @@ def Pharma_detail(lat,lon):
 	print(type(str(result[0].latitude)))
 	x1 = float(lat)
 	y1 = float(lon)
-	# x2 = float(str(Pharmacies.latitude))
-	# y2 = float(str(Pharmacies.longitude))
-	# dist = sqrt( (x1 - x2)**2 + (y1 - y2)**2 )
+	
 	
 	# approximate radius of earth in km
 	R = 6373.0

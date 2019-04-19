@@ -6,12 +6,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-#def Load_Data(file_name):
-  #  data = genfromtxt(file_name, delimiter=',', skip_header=1, converters={0: lambda s: str(s),1: lambda s: str(s),2: lambda s: str(s),3: lambda s: str(s)})
-   # return data.tolist()
-
+# This is the file to load CSV file to SQLAlchemy table
 Base = declarative_base()
 
+#Creating schema of the table from csv columns and adding primary key to the data.
 class Pharmacies(Base):
     #Tell SQLAlchemy what the table name is and if there's any table-specific arguments it should know about
     __tablename__ = 'Pharmacies'
@@ -26,10 +24,12 @@ class Pharmacies(Base):
     latitude = Column(Float)
     longitude = Column(Float)
 
-
+	
+# Creating database named pharma_test 
 engine = create_engine("sqlite:///pharma_test.db")
 Base.metadata.create_all(engine)
 
+# Location of csv file
 file_name = 'pharmacies.csv'
 df = pandas.read_csv(file_name)
-df.to_sql(con=engine, index_label='address', name=Pharmacies.__tablename__, if_exists='append')
+df.to_sql(con=engine, index_label='id', name=Pharmacies.__tablename__, if_exists='append')
